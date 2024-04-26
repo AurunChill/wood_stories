@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://b4kdcsasj2e6t"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc/wizard.gd" id="1_0dspw"]
+[ext_resource type="Texture2D" uid="uid://bspjd8i2cjjwu" path="res://assets/characters/wizard/Idle.png" id="2_xexi4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bg1b"]
+radius = 13.0
+height = 80.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thb8h"]
+atlas = ExtResource("2_xexi4")
+region = Rect2(0, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq2m5"]
+atlas = ExtResource("2_xexi4")
+region = Rect2(231, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy2ar"]
+atlas = ExtResource("2_xexi4")
+region = Rect2(462, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psuum"]
+atlas = ExtResource("2_xexi4")
+region = Rect2(693, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6rms"]
+atlas = ExtResource("2_xexi4")
+region = Rect2(924, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqrsl"]
+atlas = ExtResource("2_xexi4")
+region = Rect2(1155, 0, 231, 190)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1lbe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thb8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq2m5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy2ar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psuum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6rms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqrsl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgltb"]
+size = Vector2(122, 102)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_0dspw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 6)
+shape = SubResource("CapsuleShape2D_1bg1b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_e1lbe")
+animation = &"idle"
+frame_progress = 0.518598
+flip_h = true
+
+[node name="DialogueArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueArea"]
+position = Vector2(3, -5)
+shape = SubResource("RectangleShape2D_pgltb")
+
+[connection signal="body_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_entered"]
+[connection signal="body_exited" from="DialogueArea" to="." method="_on_dialogue_area_body_exited"]

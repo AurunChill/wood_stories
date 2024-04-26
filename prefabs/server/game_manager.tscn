@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6xaptogrsh26"]
+
+[ext_resource type="Script" path="res://scripts/server/game_manager.gd" id="1_akfnf"]
+[ext_resource type="PackedScene" uid="uid://drhcxep8axq5f" path="res://prefabs/server/server.tscn" id="1_qtv55"]
+
+[node name="GameManager" type="Node"]
+script = ExtResource("1_akfnf")
+
+[node name="Server" parent="." instance=ExtResource("1_qtv55")]

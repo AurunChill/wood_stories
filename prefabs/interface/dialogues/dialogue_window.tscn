@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=3 uid="uid://ciqdwnv04lo0f"]
+
+[ext_resource type="Script" path="res://scripts/ui/dialogue/dialogue_window.gd" id="1_5kxc3"]
+[ext_resource type="Texture2D" uid="uid://qd0k8mu3owy" path="res://assets/characters/main/main_dialogue.png" id="2_4uhu1"]
+[ext_resource type="Texture2D" uid="uid://b2rv05e82jmpn" path="res://assets/characters/wizard/wizard_dialogue.png" id="2_6ex7d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yijp"]
+bg_color = Color(0.099986, 0.099986, 0.099986, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5123w"]
+bg_color = Color(0.129558, 0.129559, 0.129558, 1)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_5kxc3")
+
+[node name="speaker_left" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(166, 338)
+scale = Vector2(0.28973, 0.28973)
+texture = ExtResource("2_4uhu1")
+
+[node name="speaker_right" type="Sprite2D" parent="."]
+position = Vector2(978, 338)
+scale = Vector2(0.298925, 0.298925)
+texture = ExtResource("2_6ex7d")
+
+[node name="TextboxContainer" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -184.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2yijp")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Panel" type="Panel" parent="TextboxContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5123w")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextboxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="start" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 36
+text = "*"
+
+[node name="Label" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 36
+text = "Super puper text Super puper text Super puper text Super puper text"
+autowrap_mode = 2
+clip_text = true
+
+[node name="end" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 36
+text = "v"
