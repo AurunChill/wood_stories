@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ciqdwnv04lo0f"]
+[gd_scene load_steps=8 format=3 uid="uid://ciqdwnv04lo0f"]
 
 [ext_resource type="Script" path="res://scripts/ui/dialogue/dialogue_window.gd" id="1_5kxc3"]
 [ext_resource type="Texture2D" uid="uid://qd0k8mu3owy" path="res://assets/characters/main/main_dialogue.png" id="2_4uhu1"]
 [ext_resource type="Texture2D" uid="uid://b2rv05e82jmpn" path="res://assets/characters/wizard/wizard_dialogue.png" id="2_6ex7d"]
+[ext_resource type="AudioStream" uid="uid://bvdfoxj1yf7it" path="res://assets/sounds/dialogues/dialogue_left_audio.mp3" id="4_f0l7o"]
+[ext_resource type="AudioStream" uid="uid://b8wcbv8cyh3rg" path="res://assets/sounds/dialogues/dialogue_right_audio.mp3" id="5_cwo7i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yijp"]
 bg_color = Color(0.099986, 0.099986, 0.099986, 1)
@@ -24,8 +26,9 @@ scale = Vector2(0.28973, 0.28973)
 texture = ExtResource("2_4uhu1")
 
 [node name="speaker_right" type="Sprite2D" parent="."]
-position = Vector2(978, 338)
-scale = Vector2(0.298925, 0.298925)
+texture_filter = 1
+position = Vector2(978, 362)
+scale = Vector2(0.31363, 0.31363)
 texture = ExtResource("2_6ex7d")
 
 [node name="TextboxContainer" type="MarginContainer" parent="."]
@@ -87,3 +90,11 @@ layout_mode = 2
 size_flags_vertical = 8
 theme_override_font_sizes/font_size = 36
 text = "v"
+
+[node name="left_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_f0l7o")
+volume_db = -10.0
+
+[node name="right_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_cwo7i")
+volume_db = -10.0

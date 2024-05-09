@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4kdcsasj2e6t"]
+[gd_scene load_steps=13 format=3 uid="uid://b4kdcsasj2e6t"]
 
 [ext_resource type="Script" path="res://scripts/characters/npc/wizard.gd" id="1_0dspw"]
 [ext_resource type="Texture2D" uid="uid://bspjd8i2cjjwu" path="res://assets/characters/wizard/Idle.png" id="2_xexi4"]
+[ext_resource type="AudioStream" uid="uid://chxudnglrggts" path="res://assets/sounds/actions/action_cough.mp3" id="3_64xqf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bg1b"]
 radius = 13.0
@@ -79,6 +80,12 @@ flip_h = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueArea"]
 position = Vector2(3, -5)
 shape = SubResource("RectangleShape2D_pgltb")
+
+[node name="sound_cough" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_64xqf")
+volume_db = -36.783
+autoplay = true
+max_distance = 300.0
 
 [connection signal="body_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_entered"]
 [connection signal="body_exited" from="DialogueArea" to="." method="_on_dialogue_area_body_exited"]

@@ -1,4 +1,5 @@
 extends CanvasLayer
+class_name DialogueWindow
 ## Script handles the display of dialogue text with a typing effect, along with speaker icons for left and right sides
 
 ## Defines the rate at which characters in the dialogue text are revealed.
@@ -24,6 +25,10 @@ const INACTIVE_SPEAKER_TRANSPARENCY = 0.4
 ## References to the speaker nodes on the right.
 @onready var speaker_right = $speaker_right
 
+## References to the audio stream 2d node
+@onready var left_speaker_audio = $left_audio
+@onready var right_speaker_audio = $right_audio
+
 
 ## Enum to determine the side of the speaker in the dialogue.
 enum SpeakerSides {
@@ -34,33 +39,35 @@ enum SpeakerSides {
 ## Signal emitted when the dialogue has finished displaying.
 signal dialogue_finished
 
-## Preloads the constants script for access to global constants.
-var constants = preload("res://scripts/global/constants.gd").new()
-
 
 ## Removes the dialogue display, including speakers, text, and the textbox itself.
 func remove_dialogue() -> void:
 	_remove_speakers()
 	_remove_text()
 	_remove_textbox()
-	emit_signal("dialogue_finished")
+	left_speaker_audio.stop()
+	right_speaker_audio.stop()
+	dialogue_finished.emit()
+
 
 ## Prepares and shows the dialogue by configuring speakers and text display.
 ## @param speaker_left Path for the left speaker's texture.
-## @param speaker_right Path for the right speaker's texture.
+## @param speaker_right Paath for the right speaker's texture.
 ## @param text The dialogue text to display.
 ## @param is_left_active Boolean indicating if the left speaker is active.
-func show_dialogue(speaker_left, speaker_right, text: String, is_left_active: bool = true) -> void:
+func show_dialogue(dialogue: Dialogue) -> void:
 	_show_textbox()
 	
-	if is_left_active:
-		_show_speaker(speaker_left, SpeakerSides.LEFT, true)
-		_show_speaker(speaker_right, SpeakerSides.RIGHT, false)
+	if dialogue.is_left_active:
+		left_speaker_audio.play()
+		_show_speaker(dialogue.speaker_left, SpeakerSides.LEFT, true)
+		_show_speaker(dialogue.speaker_right, SpeakerSides.RIGHT, false)
 	else:
-		_show_speaker(speaker_left, SpeakerSides.LEFT, false)
-		_show_speaker(speaker_right, SpeakerSides.RIGHT, true)
+		right_speaker_audio.play()
+		_show_speaker(dialogue.speaker_left, SpeakerSides.LEFT, false)
+		_show_speaker(dialogue.speaker_right, SpeakerSides.RIGHT, true)
 		
-	_show_text(text)
+	_show_text(dialogue.text)
 
 ## Hides the speaker icons.
 func _remove_speakers() -> void:
@@ -87,14 +94,13 @@ func _show_speaker(role, side: SpeakerSides, is_active: bool = true) -> void:
 	var sprite = null
 	
 	# If there https request then role is float, that's why we translate it to enum
-	if role is float or role is int:
-		role = constants.int_to_role(role)
-	
 	match role:
-		constants.Roles.MAIN:
+		'MAIN':
 			sprite = load("res://assets/characters/main/main_dialogue.png")
-		constants.Roles.WIZARD:
+		'WIZARD':
 			sprite = load("res://assets/characters/wizard/wizard_dialogue.png")
+		'NECROMANCER':
+			sprite = load('res://assets/characters/necromancer/necromancer_dialogue.png')
 		_:
 			print('default')
 			sprite = null
@@ -122,9 +128,12 @@ func _show_text(text: String) -> void:
 	tween.tween_property(label, 'visible_characters', len(text), CHAR_READ_RATE * len(text))
 	tween.connect('finished', _on_text_tween_finished)
 
+
 ## Signifies the end of the text reveal and triggers a close timer.
 func _on_text_tween_finished():
 	end_symbol.text = 'v'
+	left_speaker_audio.stop()
+	right_speaker_audio.stop()		
 	_start_close_timer()
 
 ## Starts a timer for automatically closing the dialogue box after a brief pause.

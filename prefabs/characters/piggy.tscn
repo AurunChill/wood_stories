@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://ct27d808mkscp"]
+[gd_scene load_steps=16 format=3 uid="uid://ct27d808mkscp"]
 
 [ext_resource type="Script" path="res://scripts/characters/npc/piggy.gd" id="1_7whup"]
 [ext_resource type="Texture2D" uid="uid://va471qwuuyoy" path="res://assets/characters/piggy/Piggy.png" id="1_ataqc"]
+[ext_resource type="AudioStream" uid="uid://ds4emv1aw80ga" path="res://assets/sounds/actions/action_oink.mp3" id="3_xsd0l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cxqof"]
 
@@ -100,7 +101,7 @@ texture_filter = 1
 position = Vector2(-1, -8)
 sprite_frames = SubResource("SpriteFrames_3au88")
 animation = &"walk"
-frame_progress = 0.161809
+frame_progress = 0.0739642
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 3
@@ -109,6 +110,9 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_lorq0")
+
+[node name="sound_oink" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_xsd0l")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

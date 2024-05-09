@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://dyp7b5uau7bdt"]
+[gd_scene load_steps=21 format=3 uid="uid://dyp7b5uau7bdt"]
 
-[ext_resource type="Script" path="res://scripts/characters/npc/main.gd" id="1_i3wkh"]
+[ext_resource type="Script" path="res://scripts/characters/main.gd" id="1_i3wkh"]
 [ext_resource type="Texture2D" uid="uid://bgmmva466l5vg" path="res://assets/characters/main/main_character_frames.png" id="1_wdssj"]
+[ext_resource type="AudioStream" uid="uid://bn03brfoax3y8" path="res://assets/sounds/actions/action_walking.mp3" id="3_sx4et"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taj3t"]
 radius = 6.0
@@ -14,6 +15,10 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_x0eip"]
 atlas = ExtResource("1_wdssj")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb1wx"]
+atlas = ExtResource("1_wdssj")
+region = Rect2(0, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_boh76"]
 atlas = ExtResource("1_wdssj")
@@ -71,6 +76,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x0eip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb1wx")
 }],
 "loop": true,
 "name": &"idle",
@@ -136,4 +144,8 @@ shape = SubResource("CapsuleShape2D_taj3t")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ocd5f")
 animation = &"idle"
-frame_progress = 0.288617
+frame_progress = 0.46157
+
+[node name="sound_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sx4et")
+volume_db = -4.5

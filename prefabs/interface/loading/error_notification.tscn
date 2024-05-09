@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://brgdajr6ltgoh"]
+
+[ext_resource type="Script" path="res://scripts/ui/loading/error_screen.gd" id="1_mdyyo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xdwx7"]
+bg_color = Color(0.378714, 0.551678, 0.648556, 0.768627)
+
+[node name="ErrorNotification" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mdyyo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_left = 308.0
+offset_top = 296.0
+offset_right = 708.0
+offset_bottom = 366.0
+scale = Vector2(1.32927, 1.32927)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xdwx7")
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = -34.0
+offset_top = 9.0
+offset_right = 427.0
+offset_bottom = 58.0
+text = "ОШИБКА СЕРВЕРА
+ПОЖАЛУЙСТА ОТПРАВЬТЕ ЗАПРОС ЗАНОВО"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

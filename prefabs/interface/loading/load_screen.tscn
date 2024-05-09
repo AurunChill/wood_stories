@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu87e0fh3qcma"]
+
+[ext_resource type="Script" path="res://scripts/ui/loading/load_screen.gd" id="1_pvgo2"]
+[ext_resource type="Texture2D" uid="uid://con547rnvc8kt" path="res://assets/characters/piggy/piggy_loading.png" id="2_4kcnn"]
+[ext_resource type="AudioStream" uid="uid://dtxoymc4tgpkt" path="res://assets/sounds/actions/action_screamer.mp3" id="5_qgtxt"]
+
+[node name="LoadScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pvgo2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="text_wait" type="Label" parent="CanvasLayer"]
+offset_top = 200.0
+offset_right = 1150.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 36
+text = "Please Wait"
+horizontal_alignment = 1
+
+[node name="text_loading" type="Label" parent="CanvasLayer/text_wait"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 46.0
+offset_right = 1153.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_font_sizes/font_size = 28
+text = "......"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1150.0
+offset_bottom = 650.0
+color = Color(0.329412, 0.341176, 1, 0.27451)
+
+[node name="PiggyLoading" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(-126, 404)
+rotation = 1.25955
+scale = Vector2(0.452481, 0.452481)
+texture = ExtResource("2_4kcnn")
+
+[node name="sound_screamer" type="AudioStreamPlayer2D" parent="CanvasLayer/PiggyLoading"]
+position = Vector2(-768.885, -539.872)
+rotation = -1.25955
+scale = Vector2(2.21004, 2.21004)
+stream = ExtResource("5_qgtxt")
+volume_db = 24.0
+
+[node name="text_fact" type="Label" parent="CanvasLayer"]
+offset_left = 28.0
+offset_top = 582.0
+offset_right = 1128.0
+offset_bottom = 631.0
+text = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

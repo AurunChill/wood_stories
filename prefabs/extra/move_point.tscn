@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4hwond8wcudv"]
+
+[ext_resource type="Script" path="res://scripts/extra/move_point.gd" id="1_rx5bi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3ewf"]
+size = Vector2(15.75, 12.75)
+
+[node name="MovePoint" type="Area2D"]
+script = ExtResource("1_rx5bi")
+
+[node name="collision_shape" type="CollisionShape2D" parent="."]
+scale = Vector2(1.68089, 1.68089)
+shape = SubResource("RectangleShape2D_j3ewf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

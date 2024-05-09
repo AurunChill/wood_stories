@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://ci1nh2ihwk70q"]
+
+[ext_resource type="Texture2D" uid="uid://cmjc0nfrn6e3d" path="res://assets/characters/necromancer/necromancer.png" id="1_c87jk"]
+[ext_resource type="Script" path="res://scripts/characters/npc/necromancer.gd" id="1_rn7k3"]
+[ext_resource type="AudioStream" uid="uid://ubpkrpkj6e5i" path="res://assets/sounds/actions/action_ghost_whisper.mp3" id="3_tuppr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bs2sb"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(0, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25c3c"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(160, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpllq"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(320, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t34sb"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(480, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_045hs"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(640, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5068"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(800, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42hhp"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(960, 0, 160, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb1b4"]
+atlas = ExtResource("1_c87jk")
+region = Rect2(1120, 0, 160, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n7c4m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bs2sb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25c3c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpllq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t34sb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_045hs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5068")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42hhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb1b4")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.01
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qtwff"]
+radius = 13.0
+height = 80.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfbu3"]
+size = Vector2(122, 102)
+
+[node name="Necromancer" type="CharacterBody2D"]
+script = ExtResource("1_rn7k3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(9, -39)
+scale = Vector2(1.61115, 1.61115)
+sprite_frames = SubResource("SpriteFrames_n7c4m")
+animation = &"idle"
+frame_progress = 0.46604
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 6)
+shape = SubResource("CapsuleShape2D_qtwff")
+
+[node name="DialogueArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueArea"]
+position = Vector2(3, -5)
+shape = SubResource("RectangleShape2D_mfbu3")
+
+[node name="sound_whisper" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tuppr")
+autoplay = true
+max_distance = 350.0
+
+[connection signal="body_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_entered"]
+[connection signal="body_exited" from="DialogueArea" to="." method="_on_dialogue_area_body_exited"]

@@ -6,16 +6,26 @@ extends Node
 signal input_ended(prompt)
 
 
+func disable():
+	self.visible = false
+	text_input.visible = false
+	
+
+func enable():
+	self.visible = true
+	text_input.visible = true
+
+
 func _on_line_edit_focus_entered():
 	for child in get_parent().get_children():
-		if child is BaseCharacter:
-			child.current_state = BaseCharacter.States.DISABLED
+		if child is Main:
+			child.current_state = BaseNPC.States.DISABLED
 
 
 func _on_line_edit_focus_exited():
 	for child in get_parent().get_children():
-		if child is BaseCharacter:
-			child.current_state = BaseCharacter.States.ENABLED
+		if child is Main:
+			child.current_state = BaseNPC.States.ENABLED
 
 
 func _on_line_edit_text_submitted(new_text):
