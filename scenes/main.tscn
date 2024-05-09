@@ -4519,7 +4519,7 @@ position = Vector2(-212, 119)
 position = Vector2(148, 126)
 
 [node name="point_knight" parent="." instance=ExtResource("11_lcp7s")]
-position = Vector2(31, 121)
+position = Vector2(31, 122)
 
 [node name="point_wizard" parent="." instance=ExtResource("11_lcp7s")]
 position = Vector2(243, 120)

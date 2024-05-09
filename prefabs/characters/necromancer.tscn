@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://ci1nh2ihwk70q"]
+[gd_scene load_steps=17 format=3 uid="uid://ci1nh2ihwk70q"]
 
 [ext_resource type="Texture2D" uid="uid://cmjc0nfrn6e3d" path="res://assets/characters/necromancer/necromancer.png" id="1_c87jk"]
 [ext_resource type="Script" path="res://scripts/characters/npc/necromancer.gd" id="1_rn7k3"]
 [ext_resource type="AudioStream" uid="uid://ubpkrpkj6e5i" path="res://assets/sounds/actions/action_ghost_whisper.mp3" id="3_tuppr"]
+[ext_resource type="AudioStream" uid="uid://bn03brfoax3y8" path="res://assets/sounds/actions/action_walking.mp3" id="4_2bj2t"]
+[ext_resource type="AudioStream" uid="uid://gukgsa5kjik7" path="res://assets/sounds/actions/action_hit_3.mp3" id="5_n3uht"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bs2sb"]
 atlas = ExtResource("1_c87jk")
@@ -100,6 +102,13 @@ shape = SubResource("RectangleShape2D_mfbu3")
 stream = ExtResource("3_tuppr")
 autoplay = true
 max_distance = 350.0
+
+[node name="sound_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2bj2t")
+volume_db = -4.5
+
+[node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_n3uht")
 
 [connection signal="body_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_entered"]
 [connection signal="body_exited" from="DialogueArea" to="." method="_on_dialogue_area_body_exited"]

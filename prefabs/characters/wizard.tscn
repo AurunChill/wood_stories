@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4kdcsasj2e6t"]
+[gd_scene load_steps=15 format=3 uid="uid://b4kdcsasj2e6t"]
 
 [ext_resource type="Script" path="res://scripts/characters/npc/wizard.gd" id="1_0dspw"]
 [ext_resource type="Texture2D" uid="uid://bspjd8i2cjjwu" path="res://assets/characters/wizard/Idle.png" id="2_xexi4"]
 [ext_resource type="AudioStream" uid="uid://chxudnglrggts" path="res://assets/sounds/actions/action_cough.mp3" id="3_64xqf"]
+[ext_resource type="AudioStream" uid="uid://bn03brfoax3y8" path="res://assets/sounds/actions/action_walking.mp3" id="4_r6doi"]
+[ext_resource type="AudioStream" uid="uid://gukgsa5kjik7" path="res://assets/sounds/actions/action_hit_3.mp3" id="5_m85qd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bg1b"]
 radius = 13.0
@@ -86,6 +88,13 @@ stream = ExtResource("3_64xqf")
 volume_db = -10.0
 autoplay = true
 max_distance = 300.0
+
+[node name="sound_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_r6doi")
+volume_db = -4.5
+
+[node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_m85qd")
 
 [connection signal="body_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_entered"]
 [connection signal="body_exited" from="DialogueArea" to="." method="_on_dialogue_area_body_exited"]

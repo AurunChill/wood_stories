@@ -16,7 +16,6 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var current_state = States.Character.DEFAULT
 
-
 func play_fight_animation():
 	sound_walk.stop()
 	sound_hit.play()

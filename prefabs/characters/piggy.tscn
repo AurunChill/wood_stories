@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://ct27d808mkscp"]
+[gd_scene load_steps=18 format=3 uid="uid://ct27d808mkscp"]
 
 [ext_resource type="Script" path="res://scripts/characters/npc/piggy.gd" id="1_7whup"]
 [ext_resource type="Texture2D" uid="uid://va471qwuuyoy" path="res://assets/characters/piggy/Piggy.png" id="1_ataqc"]
 [ext_resource type="AudioStream" uid="uid://ds4emv1aw80ga" path="res://assets/sounds/actions/action_oink.mp3" id="3_xsd0l"]
+[ext_resource type="AudioStream" uid="uid://bn03brfoax3y8" path="res://assets/sounds/actions/action_walking.mp3" id="4_2iudd"]
+[ext_resource type="AudioStream" uid="uid://gukgsa5kjik7" path="res://assets/sounds/actions/action_hit_3.mp3" id="5_mhdg3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cxqof"]
 
@@ -113,6 +115,13 @@ shape = SubResource("RectangleShape2D_lorq0")
 
 [node name="sound_oink" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_xsd0l")
+
+[node name="sound_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2iudd")
+volume_db = -4.5
+
+[node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_mhdg3")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
