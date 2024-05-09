@@ -41,7 +41,7 @@ func _send_request(prompt: String):
 
 func _on_start_point(point):
 	if main.move_point == point:
-		main.current_state = BaseNPC.States.DISABLED
+		main.currenta_state = States.Character.DISABLED
 
 
 func _on_request_completed(response):
@@ -50,7 +50,7 @@ func _on_request_completed(response):
 		print('Invalid generation!')		
 		var error_screen = load('res://prefabs/interface/loading/error_notification.tscn').instantiate()
 		add_child(error_screen)
-		main.current_state = BaseNPC.States.DEFAULT
+		main.current_state = States.Character.DEFAULT
 		main.move_point = null
 		hud.enable()
 		return
@@ -115,7 +115,7 @@ func _on_request_completed(response):
 			}
 		]
 	}
-	main.current_state = BaseNPC.States.DEFAULT
+	main.current_state = States.Character.DEFAULT
 	hud.enable()
 	
 	data = translator.translate(response)
@@ -180,7 +180,7 @@ func _start_dialogue_sequence(action_data):
 func _on_action_finished(point):
 	print('action is finished')
 	if point == main.move_point:
-		main.current_state = BaseNPC.States.DEFAULT
+		main.current_state = States.Character.DEFAULT
 	_process_actions_queue()
 
 
@@ -201,6 +201,6 @@ func _determine_move_target(title) -> Node:
 
 func _initiate_move_to(target: PointOfInterest):
 	main.move_point = target
-	main.current_state = BaseNPC.States.MOVING_TO_POINT
+	main.current_state = States.Character.MOVING_TO_POINT
 	if not target.has_come.is_connected(_on_action_finished):
 		target.has_come.connect(_on_action_finished, ConnectFlags.CONNECT_ONE_SHOT)

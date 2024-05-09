@@ -18,14 +18,14 @@ func enable():
 
 func _on_line_edit_focus_entered():
 	for child in get_parent().get_children():
-		if child is Main:
-			child.current_state = BaseNPC.States.DISABLED
+		if child is BaseCharacter:
+			child.current_state = States.Character.DISABLED
 
 
 func _on_line_edit_focus_exited():
 	for child in get_parent().get_children():
-		if child is Main:
-			child.current_state = BaseNPC.States.ENABLED
+		if child is BaseCharacter:
+			child.current_state = States.Character.DEFAULT
 
 
 func _on_line_edit_text_submitted(new_text):

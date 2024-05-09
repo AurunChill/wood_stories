@@ -83,7 +83,7 @@ shape = SubResource("RectangleShape2D_pgltb")
 
 [node name="sound_cough" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_64xqf")
-volume_db = -36.783
+volume_db = -10.0
 autoplay = true
 max_distance = 300.0
 

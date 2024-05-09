@@ -1,23 +1,12 @@
-extends CharacterBody2D
+extends BaseCharacter
 class_name BaseNPC
 
-# State
-enum States {
-	DEFAULT,
-	ENABLED,
-	DISABLED,
-	MOVING_TO_POINT,
-	READY_TO_DIALOGUE,
-}
-var current_state: States = States.DEFAULT
-
 # New shared properties
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dialogue_area: Area2D = $DialogueArea
 var dialogue_interact = null
 var dialogue_manager = null
 var dialogue_interact_created = false
-var dialogue_character: Main = null
+var dialogue_character: BaseCharacter = null
 var in_dialogue: bool = false
 
 
@@ -27,30 +16,16 @@ func _ready():
 
 func _physics_process(delta):
 	match current_state:
-		States.DEFAULT:
-			on_default(delta)
-		States.READY_TO_DIALOGUE:
+		States.Character.READY_TO_DIALOGUE:
 			on_ready_to_dialogue()
-		States.ENABLED:
-			on_enabled()
-		States.DISABLED:
-			on_disabled()
 			
-
-func on_default(delta):
-	pass
-	
-
-func on_move_to_point(delta: float, point: PointOfInterest):
-	pass
-	
 
 func on_ready_to_dialogue():
 	if in_dialogue:
 		return
 	
 	if Input.is_action_just_pressed("interact"):
-		dialogue_character.current_state = States.DISABLED
+		dialogue_character.current_state = States.Character.DISABLED
 
 		if dialogue_interact_created:
 			remove_child(dialogue_interact)
@@ -68,16 +43,9 @@ func on_ready_to_dialogue():
 
 
 func _on_dialogue_finished(_point):
-	dialogue_character.current_state = States.DEFAULT
+	dialogue_character.current_state = States.Character.DEFAULT
 	in_dialogue = false
 
-
-func on_enabled():
-	self.current_state = States.DEFAULT
-
-
-func on_disabled():
-	pass
 
 # This method will be overridden in derived classes to specify character-specific dialogues
 func setup_dialogues():
@@ -90,7 +58,7 @@ func dialogue_area_entered(body):
 	"""
 	if body is Main and body != self:
 		print('In dialogue zone')
-		current_state = BaseNPC.States.READY_TO_DIALOGUE
+		current_state = States.Character.READY_TO_DIALOGUE
 		
 		dialogue_character = body
 		
@@ -107,7 +75,7 @@ func dialogue_area_exited(body):
 	"""
 	if body is Main and body != self:
 		print('Out of dialogue zone')
-		current_state = BaseNPC.States.DEFAULT
+		current_state = States.Character.DEFAULT
 		
 		if dialogue_interact_created:
 			remove_child(dialogue_interact)

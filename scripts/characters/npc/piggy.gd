@@ -6,7 +6,7 @@ class_name Piggy
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sound_oink: AudioStreamPlayer2D = $sound_oink
 
-var main_char: Main
+var follow_character: BaseCharacter
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var speed: float
@@ -38,7 +38,7 @@ func _follow(delta: float):
 	"""
 	_move(delta, dir)
 	
-	if abs(main_char.global_position.x - global_position.x) > 50:
+	if abs(follow_character.global_position.x - global_position.x) > 50:
 		current_state = States.STANDING
 	
 	
@@ -74,8 +74,8 @@ func _ready():
 	Initialize Piggy's properties with those of the main character.
 	"""
 	_stand(0)
-	main_char = get_parent().get_node('main')
-	speed = main_char.SPEED
+	follow_character = get_parent().get_node('main')
+	speed = follow_character.speed
 	oink_timer = randf_range(oink_interval_min, oink_interval_max)
 	
 	
@@ -104,7 +104,7 @@ func _on_area_2d_body_entered(body):
 	Handle the event when Piggy enters a physics body area (e.g., the main character).
 	Update Piggy's state to STANDING.
 	"""
-	if body == main_char:
+	if body == follow_character:
 		current_state = States.STANDING
 
 
@@ -113,7 +113,7 @@ func _on_area_2d_body_exited(body):
 	Handle the event when Piggy exits a physics body area (e.g., the main character).
 	Update Piggy's state to FOLLOWING.
 	"""
-	if body == main_char:
+	if body == follow_character:
 		current_state = States.FOLLOWING
-		dir = _update_direction(main_char.is_looking_left)
+		dir = _update_direction(follow_character.is_looking_left)
 		
