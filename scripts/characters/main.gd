@@ -8,6 +8,7 @@ func _ready():
 	is_player = true
 	anim.play('idle')
 
+
 func _physics_process(delta):
 	apply_gravity(delta)
 	match current_state:
