@@ -6,3 +6,4 @@ class Character:
 	const READY_TO_DIALOGUE: String = 'ready_to_dialogue'
 	const DISABLED: String = 'disabled'
 	const FOLLOWING: String = 'following'
+	const FIGHT: String = 'fight'

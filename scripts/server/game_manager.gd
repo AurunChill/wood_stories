@@ -11,41 +11,40 @@ var data
 var action_indexes = {"data_id": 0, "id": 0, "dialogue_id": 0}
 var move_target = null
 var current_prompt = ''
-var actions_queue = [] # Queue to store actions
+var actions_queue = []
 
 func _ready():
 	hud.connect("input_ended", _on_get_input_text)
 
 
 func _send_request(prompt: String):
-	#current_prompt = prompt
-	#server.send_request(prompt)
-	#
-	#loading_screen = load("res://prefabs/interface/loading/load_screen.tscn").instantiate()
-	#add_child(loading_screen)
-		#
-	#move_target = _determine_move_target('start')
-	#if not move_target.is_in(main):
-		#main.move_point = move_target
-		#main.current_state = BaseNPC.States.MOVING_TO_POINT
-		#if not move_target.has_come.is_connected(_on_start_point):
-			#move_target.has_come.connect(_on_start_point)
-	#else:
-		#main.current_state = BaseNPC.States.DISABLED
-	#hud.disable()
+	current_prompt = prompt
+	server.send_request(prompt)
+	
+	loading_screen = load("res://prefabs/interface/loading/load_screen.tscn").instantiate()
+	add_child(loading_screen)
 		
-	_on_request_completed('some')
-	#if not server.request_completed.is_connected(_on_request_completed):
-		#server.request_completed.connect(_on_request_completed, ConnectFlags.CONNECT_ONE_SHOT)
+	move_target = _determine_move_target('start')
+	if not move_target.is_in(main):
+		main.move_point = move_target
+		main.current_state = States.Character.MOVING_TO_POINT
+		if not move_target.has_come.is_connected(_on_start_point):
+			move_target.has_come.connect(_on_start_point)
+	else:
+		main.current_state = States.Character.DISABLED
+	hud.disable()
+		
+	if not server.request_completed.is_connected(_on_request_completed):
+		server.request_completed.connect(_on_request_completed, ConnectFlags.CONNECT_ONE_SHOT)
 
 
 func _on_start_point(point):
 	if main.move_point == point:
-		main.currenta_state = States.Character.DISABLED
+		main.current_state = States.Character.DISABLED
 
 
 func _on_request_completed(response):
-	#remove_child(loading_screen)
+	remove_child(loading_screen)
 	if not response:
 		print('Invalid generation!')		
 		var error_screen = load('res://prefabs/interface/loading/error_notification.tscn').instantiate()
@@ -55,66 +54,6 @@ func _on_request_completed(response):
 		hud.enable()
 		return
 		
-	response = {
-	"script": [
-			{
-				"actions": [
-					"come_to(WIZARD)",
-					"begin_dialogue_to(WIZARD)"
-				],
-				"dialogue": [
-					{
-						"speaker": "MAIN",
-						"text": "Greetings, Wise Wizard! I seek your guidance."
-					},
-					{
-						"speaker": "WIZARD",
-						"text": "Welcome, adventurer. How may I assist you?"
-					},
-					{
-						"speaker": "MAIN",
-						"text": "I have heard rumors of a strange necromancer lurking in the forest. Do you know anything about this?"
-					},
-					{
-						"speaker": "WIZARD",
-						"text": "Ah, yes. The necromancer is a dangerous figure, using dark magic for forbidden purposes. Be cautious on your quest."
-					},
-					{
-						"speaker": "MAIN",
-						"text": "Thank you for the warning, Wizard. I will proceed with caution."
-					}
-				]
-			},
-			{
-				"actions": [
-					"come_to(NECROMANCER)",
-					"begin_dialogue_to(NECROMANCER)"
-				],
-				"dialogue": [
-					{
-						"speaker": "MAIN",
-						"text": "Greetings, Necromancer. I come seeking answers about your dark ways."
-					},
-					{
-						"speaker": "NECROMANCER",
-						"text": "Why do you disturb me, mortal?"
-					},
-					{
-						"speaker": "MAIN",
-						"text": "I wish to understand your motives and intentions. Why do you practice necromancy?"
-					},
-					{
-						"speaker": "NECROMANCER",
-						"text": "My power is not for the weak-minded to comprehend. Leave now, before it is too late."
-					},
-					{
-						"speaker": "MAIN",
-						"text": "I will not leave until I have the answers I seek. Tell me, Necromancer, what drives you to darkness?"
-					}
-				]
-			}
-		]
-	}
 	main.current_state = States.Character.DEFAULT
 	hud.enable()
 	
@@ -130,10 +69,10 @@ func _reset_action_indexes():
 
 
 func _prepare_actions_queue():
-	actions_queue.clear() # Clear the queue before filling
+	actions_queue.clear()
 	while _has_more_actions():
 		var action_data = _get_current_action()
-		actions_queue.append(action_data) # Enqueue the action
+		actions_queue.append(action_data)
 		_advance_action_pointer()
 
 func _has_more_actions() -> bool:
@@ -143,15 +82,13 @@ func _process_actions_queue():
 	if actions_queue.size() == 0:
 		print("All actions processed")
 		return
-	var action_data = actions_queue.pop_front() # Dequeue the next action
+	var action_data = actions_queue.pop_front()
 	match action_data.method_name:
 		'come_to':
 			_handle_move_action(action_data)
 		'begin_dialogue_to':
 			print('here')
 			_start_dialogue_sequence(action_data)
-			# Note: We cannot immediately process the next action in queue here
-			# as dialogues are asynchronous. It will be triggered by _on_action_finished.
 
 
 func _get_current_action():
@@ -163,7 +100,7 @@ func _handle_move_action(action_data):
 	if main.move_point != move_target:
 		_initiate_move_to(move_target)
 	else:
-		_process_actions_queue() # Directly process next action if no movement needed
+		_process_actions_queue()
 
 
 func _start_dialogue_sequence(action_data):
