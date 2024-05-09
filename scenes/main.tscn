@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ckeo2a3j2n84u"]
+[gd_scene load_steps=27 format=3 uid="uid://ckeo2a3j2n84u"]
 
 [ext_resource type="PackedScene" uid="uid://c6xaptogrsh26" path="res://prefabs/server/game_manager.tscn" id="1_b00vo"]
 [ext_resource type="Texture2D" uid="uid://cyntvanjbypx2" path="res://assets/environment/springstar_fields/background_0.png" id="2_ohr3q"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ci1nh2ihwk70q" path="res://prefabs/characters/necromancer.tscn" id="14_5o8j0"]
 [ext_resource type="Texture2D" uid="uid://du2viojw8vel7" path="res://assets/characters/skeleton/idle.png" id="16_lgq43"]
 [ext_resource type="Script" path="res://scripts/characters/npc/skeleton.gd" id="17_x1hfw"]
+[ext_resource type="PackedScene" uid="uid://umeur7ihfhcm" path="res://prefabs/characters/knight_woman.tscn" id="18_k51g8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mxjqn"]
 texture = ExtResource("2_xxxwb")
@@ -4400,8 +4401,8 @@ texture = ExtResource("3_tx0y4")
 56:61/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_0s631"]
-physics_layer_0/collision_layer = 3
-physics_layer_0/collision_mask = 3
+physics_layer_0/collision_layer = 7
+physics_layer_0/collision_mask = 7
 sources/0 = SubResource("TileSetAtlasSource_mxjqn")
 sources/1 = SubResource("TileSetAtlasSource_oy6q7")
 
@@ -4484,6 +4485,7 @@ centered = false
 texture_filter = 1
 position = Vector2(148, 121)
 scale = Vector2(0.853797, 0.853797)
+speed = 120.0
 
 [node name="Camera2D" type="Camera2D" parent="main"]
 offset = Vector2(0, -40)
@@ -4516,6 +4518,9 @@ position = Vector2(-212, 119)
 [node name="point_start" parent="." instance=ExtResource("11_lcp7s")]
 position = Vector2(148, 126)
 
+[node name="point_knight" parent="." instance=ExtResource("11_lcp7s")]
+position = Vector2(31, 121)
+
 [node name="point_wizard" parent="." instance=ExtResource("11_lcp7s")]
 position = Vector2(243, 120)
 
@@ -4536,3 +4541,7 @@ sprite_frames = SubResource("SpriteFrames_l2tfp")
 animation = &"idle"
 frame_progress = 0.814094
 script = ExtResource("17_x1hfw")
+
+[node name="knight_woman" parent="." instance=ExtResource("18_k51g8")]
+position = Vector2(-8.99999, 114)
+scale = Vector2(0.389363, 0.389363)

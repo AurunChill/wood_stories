@@ -28,7 +28,8 @@ class Roles:
 	static var MAIN = 'MAIN'
 	static var WIZARD = 'WIZARD'
 	static var NECROMANCER = 'NECROMANCER'
+	static var KNIGHT = 'KNIGHT'
 	
 	static func get_values() -> Array[String]:
-		return [NONE, MAIN, WIZARD, NECROMANCER]
+		return [NONE, MAIN, WIZARD, NECROMANCER, KNIGHT]
 	

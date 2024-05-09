@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://umeur7ihfhcm"]
+
+[ext_resource type="Script" path="res://scripts/characters/npc/knight_woman.gd" id="1_uijdy"]
+[ext_resource type="AudioStream" uid="uid://chxudnglrggts" path="res://assets/sounds/actions/action_cough.mp3" id="2_23130"]
+[ext_resource type="Texture2D" uid="uid://cemcj5laxnjdo" path="res://assets/characters/knight_woman/knigh_woman_sheet.png" id="3_c6mu4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3pkmp"]
+radius = 13.0
+height = 80.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5f50v"]
+size = Vector2(122, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwedd"]
+atlas = ExtResource("3_c6mu4")
+region = Rect2(0, 0, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvfgc"]
+atlas = ExtResource("3_c6mu4")
+region = Rect2(69, 0, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ug3mr"]
+atlas = ExtResource("3_c6mu4")
+region = Rect2(138, 0, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rt1w"]
+atlas = ExtResource("3_c6mu4")
+region = Rect2(207, 0, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp1k6"]
+atlas = ExtResource("3_c6mu4")
+region = Rect2(276, 0, 69, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uifo5"]
+atlas = ExtResource("3_c6mu4")
+region = Rect2(345, 0, 69, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_21d0l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwedd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvfgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ug3mr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rt1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp1k6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uifo5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[node name="KnightWoman" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_uijdy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 6)
+shape = SubResource("CapsuleShape2D_3pkmp")
+
+[node name="DialogueArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueArea"]
+texture_filter = 1
+position = Vector2(3, -5)
+shape = SubResource("RectangleShape2D_5f50v")
+
+[node name="sound_cough" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_23130")
+volume_db = -10.0
+autoplay = true
+max_distance = 300.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-12, -3)
+scale = Vector2(2.20257, 2.20257)
+sprite_frames = SubResource("SpriteFrames_21d0l")
+animation = &"idle"
+frame_progress = 0.370254
+flip_h = true
+
+[connection signal="body_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_entered"]
+[connection signal="body_exited" from="DialogueArea" to="." method="_on_dialogue_area_body_exited"]
+[connection signal="body_shape_entered" from="DialogueArea" to="." method="_on_dialogue_area_body_shape_entered"]

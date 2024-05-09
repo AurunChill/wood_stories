@@ -101,8 +101,9 @@ func _show_speaker(role, side: SpeakerSides, is_active: bool = true) -> void:
 			sprite = load("res://assets/characters/wizard/wizard_dialogue.png")
 		'NECROMANCER':
 			sprite = load('res://assets/characters/necromancer/necromancer_dialogue.png')
+		'KNIGHT':
+			sprite = load("res://assets/characters/knight_woman/knight_woman_dialogue.png")
 		_:
-			print('default')
 			sprite = null
 	
 	var current_speaker = null

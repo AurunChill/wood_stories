@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/ui/dialogue/dialogue_window.gd" id="1_5kxc3"]
 [ext_resource type="Texture2D" uid="uid://qd0k8mu3owy" path="res://assets/characters/main/main_dialogue.png" id="2_4uhu1"]
-[ext_resource type="Texture2D" uid="uid://b2rv05e82jmpn" path="res://assets/characters/wizard/wizard_dialogue.png" id="2_6ex7d"]
+[ext_resource type="Texture2D" uid="uid://0wjnunpeudsm" path="res://assets/characters/knight_woman/knight_woman_dialogue.png" id="3_mo1l3"]
 [ext_resource type="AudioStream" uid="uid://bvdfoxj1yf7it" path="res://assets/sounds/dialogues/dialogue_left_audio.mp3" id="4_f0l7o"]
 [ext_resource type="AudioStream" uid="uid://b8wcbv8cyh3rg" path="res://assets/sounds/dialogues/dialogue_right_audio.mp3" id="5_cwo7i"]
 
@@ -29,7 +29,7 @@ texture = ExtResource("2_4uhu1")
 texture_filter = 1
 position = Vector2(978, 362)
 scale = Vector2(0.31363, 0.31363)
-texture = ExtResource("2_6ex7d")
+texture = ExtResource("3_mo1l3")
 
 [node name="TextboxContainer" type="MarginContainer" parent="."]
 anchors_preset = 12

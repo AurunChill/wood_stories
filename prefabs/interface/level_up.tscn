@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://fvbyxnqjachj"]
+
+[ext_resource type="Texture2D" uid="uid://bjx5ukoferha1" path="res://assets/ui/level_up.png" id="1_g53pl"]
+[ext_resource type="Script" path="res://scripts/ui/level_up.gd" id="1_ksjy0"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ksjy0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1150.0
+offset_bottom = 650.0
+color = Color(0.329412, 0.341176, 1, 0.27451)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(562, 271)
+scale = Vector2(0.476013, 0.476013)
+texture = ExtResource("1_g53pl")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 357.0
+offset_top = 337.0
+offset_right = 821.0
+offset_bottom = 404.0
+theme_override_font_sizes/font_size = 48
+text = "Уровень повышен!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="request_amount" type="Label" parent="CanvasLayer"]
+offset_left = 454.0
+offset_top = 417.0
+offset_right = 696.0
+offset_bottom = 440.0
+text = "Общее количество запросов: "

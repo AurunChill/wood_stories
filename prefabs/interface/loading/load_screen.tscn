@@ -46,7 +46,7 @@ scale = Vector2(0.452481, 0.452481)
 texture = ExtResource("2_4kcnn")
 
 [node name="sound_screamer" type="AudioStreamPlayer2D" parent="CanvasLayer/PiggyLoading"]
-position = Vector2(-768.885, -539.872)
+position = Vector2(-773.093, -541.225)
 rotation = -1.25955
 scale = Vector2(2.21004, 2.21004)
 stream = ExtResource("5_qgtxt")

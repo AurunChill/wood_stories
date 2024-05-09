@@ -4,6 +4,7 @@ class_name Main
 var move_point: PointOfInterest
 var move_action: String
 
+
 func _ready():
 	is_player = true
 	anim.play('idle')

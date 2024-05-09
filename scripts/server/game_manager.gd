@@ -6,6 +6,8 @@ extends Node
 @onready var hud: Node = get_parent().get_node('HUD')
 
 var loading_screen = null
+var level_up_screen = null
+var request_amount: int
 
 var data
 var action_indexes = {"data_id": 0, "id": 0, "dialogue_id": 0}
@@ -81,13 +83,13 @@ func _has_more_actions() -> bool:
 func _process_actions_queue():
 	if actions_queue.size() == 0:
 		print("All actions processed")
+		show_level_up_screen()
 		return
 	var action_data = actions_queue.pop_front()
 	match action_data.method_name:
 		'come_to':
 			_handle_move_action(action_data)
 		'begin_dialogue_to':
-			print('here')
 			_start_dialogue_sequence(action_data)
 
 
@@ -141,3 +143,23 @@ func _initiate_move_to(target: PointOfInterest):
 	main.current_state = States.Character.MOVING_TO_POINT
 	if not target.has_come.is_connected(_on_action_finished):
 		target.has_come.connect(_on_action_finished, ConnectFlags.CONNECT_ONE_SHOT)
+		
+
+func show_level_up_screen():
+	level_up_screen = load("res://prefabs/interface/level_up.tscn").instantiate()
+	add_child(level_up_screen)
+	request_amount = Saver.load_total_request_amount() + 1	
+	level_up_screen.set_amount(request_amount)
+	
+	var hide_timer = Timer.new()
+	hide_timer.wait_time = 5
+	hide_timer.one_shot = true
+	add_child(hide_timer)
+	hide_timer.start()
+	hide_timer.timeout.connect(_on_hide_level_up_screen)
+	
+
+func _on_hide_level_up_screen():
+	remove_child(level_up_screen)
+	level_up_screen = false
+	Saver.save_total_request_amount(request_amount)
