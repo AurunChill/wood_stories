@@ -3,6 +3,12 @@ class_name KnightWoman
 
 var looking_at: BaseCharacter
 
+@onready var whistle_sound: AudioStreamPlayer2D = $sound_whistle
+var whistle_timer: float = 0
+var whistle_interval_min: float = 10
+var whistle_interval_max: float = 25
+
+
 func _ready():
 	anim.play('idle')
 	looking_at = get_parent().get_node('main')
@@ -20,6 +26,15 @@ func _physics_process(delta):
 	match current_state:
 		States.Character.READY_TO_DIALOGUE:
 			on_ready_to_dialogue()
+	process_background_sound(delta)
+
+
+func process_background_sound(delta):
+	whistle_timer -= delta
+	if whistle_timer <= 0:
+		whistle_sound.play()
+		whistle_timer = randf_range(whistle_interval_min, whistle_interval_max)
+
 
 # Override setup_dialogues in derived characters
 func setup_dialogues():

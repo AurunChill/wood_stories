@@ -15,7 +15,7 @@ func send_request(prompt: String) -> void:
 	print('Sending prompt')
 	var url = 'http://' + HOST + ':' + PORT + '/' + METHOD
 	var headers = ['Content-Type: application/json']
-	var json = JSON.stringify({'prompt': prompt + '. Minimum 12 dialogues!!'})
+	var json = JSON.stringify({'prompt': prompt})
 	
 	if not $HTTPRequest.request_completed.is_connected(_on_request_completed):
 		$HTTPRequest.request_completed.connect(_on_request_completed)

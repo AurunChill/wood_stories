@@ -4485,7 +4485,7 @@ centered = false
 texture_filter = 1
 position = Vector2(148, 121)
 scale = Vector2(0.853797, 0.853797)
-speed = 120.0
+speed = 50.0
 
 [node name="Camera2D" type="Camera2D" parent="main"]
 offset = Vector2(0, -40)
@@ -4528,10 +4528,11 @@ position = Vector2(243, 120)
 position = Vector2(-1, 2)
 stream = ExtResource("12_ie4ei")
 volume_db = -15.0
-autoplay = true
 
 [node name="sound_ambient2" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_m3b62")
+volume_db = -10.0
+autoplay = true
 
 [node name="skeleton" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

@@ -1,14 +1,29 @@
 extends BaseNPC
 class_name Wizard
 
+@onready var sound_cough: AudioStreamPlayer2D = $sound_cough
+var cough_timer: float = 0
+var cough_interval_min: float = 10
+var cough_interval_max: float = 25
+
 func _ready():
 	anim.play('idle')
+	cough_timer = randf_range(cough_interval_min, cough_interval_max)
 	
 
 func _physics_process(delta):
 	match current_state:
 		States.Character.READY_TO_DIALOGUE:
 			on_ready_to_dialogue()
+	process_background_sound(delta)
+
+
+func process_background_sound(delta):
+	cough_timer -= delta
+	if cough_timer <= 0:
+		sound_cough.play()
+		cough_timer = randf_range(cough_interval_min, cough_interval_max)
+		
 
 # Override setup_dialogues in derived characters
 func setup_dialogues():

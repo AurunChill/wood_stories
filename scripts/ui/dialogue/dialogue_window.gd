@@ -127,8 +127,8 @@ func _show_text(text: String) -> void:
 	
 	var tween = create_tween()
 	tween.tween_property(label, 'visible_characters', len(text), CHAR_READ_RATE * len(text))
-	tween.connect('finished', _on_text_tween_finished)
-
+	tween.finished.connect(_on_text_tween_finished)
+	
 
 ## Signifies the end of the text reveal and triggers a close timer.
 func _on_text_tween_finished():

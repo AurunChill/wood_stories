@@ -31,6 +31,10 @@ func _physics_process(delta):
 			_on_follow(delta)
 	move_and_slide()
 	
+	process_background_sound(delta)
+
+
+func process_background_sound(delta):
 	oink_timer -= delta
 	if oink_timer <= 0:
 		sound_oink.play()

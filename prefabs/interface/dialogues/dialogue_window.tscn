@@ -79,9 +79,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 36
-text = "Super puper text Super puper text Super puper text Super puper text"
-autowrap_mode = 2
-clip_text = true
+text = "Super puper text Super puper text Super puper text Super puper text d dfdddddddddddddddddddddddddddddddddddddddddddddddddddddddd adfadsfsadfsafd sadfsa dsdf sdf sd f"
+autowrap_mode = 3
 
 [node name="end" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
 texture_filter = 1
