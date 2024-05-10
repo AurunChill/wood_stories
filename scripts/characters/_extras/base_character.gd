@@ -23,13 +23,13 @@ func play_fight_animation():
 	is_hitting = true
 		
 func handle_actions(delta: float) -> void:
-	if is_hitting and anim.frame_progress == 1:
-		anim.stop()
-		is_hitting = false
-		anim.play('lie_down')
-	if Input.is_action_just_pressed('left_mouse_click'):
-		if not is_hitting:
-			play_fight_animation()
+	#if is_hitting and anim.frame_progress == 1:
+		#anim.stop()
+		#is_hitting = false
+		#anim.play('lie_down')
+	#if Input.is_action_just_pressed('left_mouse_click'):
+		#if not is_hitting:
+			#play_fight_animation()
 		
 	var direction: int = Input.get_axis("left", "right")
 	if direction != 0:

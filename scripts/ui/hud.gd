@@ -1,10 +1,10 @@
-extends Node
+extends CanvasLayer
 
-@onready var text_input = $CanvasLayer/MarginContainer/LineEdit
+@onready var text_input = $MarginContainer/LineEdit
+@onready var menu_button = $MenuButton
 
 # Signal
 signal input_ended(prompt)
-
 
 func disable():
 	self.visible = false

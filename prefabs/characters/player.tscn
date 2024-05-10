@@ -225,3 +225,4 @@ volume_db = -4.5
 
 [node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_y2agm")
+volume_db = -10.0
