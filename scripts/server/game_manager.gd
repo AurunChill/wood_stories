@@ -1,10 +1,17 @@
 extends Node
+class_name GameManager
+## Controls scene "script" flow
 
+## A node representing the server, linked via the editor.
 @onready var server: Node = $Server
+## A node representing the translator, linked via the editor.
 @onready var translator: Node = $Translator
+## Main node linked via the hierarchy.
 @onready var main: Main = get_parent().get_node('main')
+## HUD node linked via the hierarchy.
 @onready var hud: Node = get_parent().get_node('HUD')
 
+## Various instance variables for state management.
 var loading_screen = null
 var level_up_screen = null
 var request_amount: int
@@ -15,14 +22,20 @@ var move_target = null
 var current_prompt = ''
 var actions_queue = []
 
+## Called when the node is ready.
 func _ready():
+	# Connect the input ended signal from HUD to the method _on_get_input_text.
 	hud.connect("input_ended", _on_get_input_text)
 
-
+## Sends a request to the server with the specified prompt.
+##
+## @param prompt: The prompt string to send to the server.
+## @return: void
 func _send_request(prompt: String):
 	current_prompt = prompt
 	server.send_request(prompt)
 	
+	# Show the loading screen while waiting for the server response.
 	loading_screen = load("res://prefabs/interface/loading/load_screen.tscn").instantiate()
 	add_child(loading_screen)
 		
@@ -39,12 +52,18 @@ func _send_request(prompt: String):
 	if not server.request_completed.is_connected(_on_request_completed):
 		server.request_completed.connect(_on_request_completed, ConnectFlags.CONNECT_ONE_SHOT)
 
-
+## Handles the event when the character reaches the start point.
+##
+## @param point: The point where the character moves to.
+## @return: void
 func _on_start_point(point):
 	if main.move_point == point:
 		main.current_state = States.Character.DISABLED
 
-
+## Handles the server request completion event.
+##
+## @param response: The server's response to the request.
+## @return: void
 func _on_request_completed(response):
 	remove_child(loading_screen)
 	if not response:
@@ -64,12 +83,16 @@ func _on_request_completed(response):
 	_prepare_actions_queue()
 	_process_actions_queue()
 
-
+## Resets the action indexes to their initial state.
+##
+## @return: void
 func _reset_action_indexes():
 	action_indexes = {"data_id": 0, "id": 0, "dialogue_id": 0}
 	move_target = null
 
-
+## Prepares the actions queue by appending each action data.
+##
+## @return: void
 func _prepare_actions_queue():
 	actions_queue.clear()
 	while _has_more_actions():
@@ -77,9 +100,15 @@ func _prepare_actions_queue():
 		actions_queue.append(action_data)
 		_advance_action_pointer()
 
+## Checks if there are more actions to be processed.
+##
+## @return: bool: True if more actions exist, otherwise false.
 func _has_more_actions() -> bool:
 	return action_indexes["data_id"] < data.actions.size()
 
+## Processes the queued actions.
+##
+## @return: void
 func _process_actions_queue():
 	if actions_queue.size() == 0:
 		print("All actions processed")
@@ -92,11 +121,16 @@ func _process_actions_queue():
 		'begin_dialogue_to':
 			_start_dialogue_sequence(action_data)
 
-
+## Gets the current action based on the action indexes.
+##
+## @return: The current action data.
 func _get_current_action():
 	return data.actions[action_indexes["data_id"]][action_indexes["id"]]
 
-
+## Handles the move action by determining the move target and initiating movement.
+##
+## @param action_data: The action data containing movement information.
+## @return: void
 func _handle_move_action(action_data):
 	move_target = _determine_move_target(action_data.role)
 	if main.move_point != move_target:
@@ -104,7 +138,10 @@ func _handle_move_action(action_data):
 	else:
 		_process_actions_queue()
 
-
+## Starts the dialogue sequence based on action data.
+##
+## @param action_data: The action data containing dialogue information.
+## @return: void
 func _start_dialogue_sequence(action_data):
 	var dialogue_manager = DialogueManager.new()
 	add_child(dialogue_manager)
@@ -115,36 +152,52 @@ func _start_dialogue_sequence(action_data):
 	dialogue_manager.all_dialogues_finished.connect(_on_action_finished)
 	action_indexes["dialogue_id"] += 1
 
-
+## Handles the event when an action is finished.
+##
+## @param point: The point where the action was completed.
+## @return: void
 func _on_action_finished(point):
 	print('action is finished')
 	if point == main.move_point:
 		main.current_state = States.Character.DEFAULT
 	_process_actions_queue()
 
-
+## Gets input text and sends a request.
+##
+## @param prompt: The prompt text input by the user.
+## @return: void
 func _on_get_input_text(prompt: String):
 	_send_request(prompt)
 
-
+## Advances the action pointer to the next action.
+##
+## @return: void
 func _advance_action_pointer():
 	action_indexes["id"] += 1
 	if action_indexes["id"] >= data.actions[action_indexes["data_id"]].size():
 		action_indexes["id"] = 0
 		action_indexes["data_id"] += 1
 
-
+## Determines the move target based on the title.
+##
+## @param title: The title to determine the move target.
+## @return: Node: The determined move target node.
 func _determine_move_target(title) -> Node:
 	return get_parent().get_node("point_" + title.to_lower())
 
-
+## Initiates movement to the specified target.
+##
+## @param target: The target PointOfInterest node to move to.
+## @return: void
 func _initiate_move_to(target: PointOfInterest):
 	main.move_point = target
 	main.current_state = States.Character.MOVING_TO_POINT
 	if not target.has_come.is_connected(_on_action_finished):
 		target.has_come.connect(_on_action_finished, ConnectFlags.CONNECT_ONE_SHOT)
 		
-
+## Shows the level up screen and handles the timing for hiding it.
+##
+## @return: void
 func show_level_up_screen():
 	level_up_screen = load("res://prefabs/interface/level_up.tscn").instantiate()
 	add_child(level_up_screen)
@@ -157,8 +210,10 @@ func show_level_up_screen():
 	add_child(hide_timer)
 	hide_timer.start()
 	hide_timer.timeout.connect(_on_hide_level_up_screen)
-	
 
+## Hides the level up screen after the timer times out.
+##
+## @return: void
 func _on_hide_level_up_screen():
 	remove_child(level_up_screen)
 	level_up_screen = false
