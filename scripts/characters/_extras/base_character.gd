@@ -14,13 +14,10 @@ class_name BaseCharacter
 @onready var sound_hit: AudioStreamPlayer2D = $sound_hit
 
 ## Determines if the character is controlled by the player.
-var is_player = false
+var is_player: bool = false
 
 ## Determines if the character is looking to the left.
 var is_looking_left: bool = false
-
-## Determines if the character is in the hitting state.
-var is_hitting: bool = false
 
 ## Speed of the character.
 @export var speed: float = 40.0
@@ -31,13 +28,6 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 ## Represents the current state of the character.
 var current_state = States.Character.DEFAULT
 
-## Plays the fight animation and sound.
-## Sets the is_hitting flag to true.
-func play_fight_animation():
-	sound_walk.stop()
-	sound_hit.play()
-	anim.play('fight')
-	is_hitting = true
 		
 ## Handles player input actions for movement.
 ## Updates the character's direction and velocity based on input.
@@ -66,24 +56,17 @@ func update_direction(direction: int) -> void:
 ## Updates the animation and sound based on the character's velocity.
 ## Plays walk animation and sound if character is moving,
 ## otherwise plays idle animation and stops the walk sound.
-##
+##	
 ## @return: void
 func update_animation_and_sound() -> void:
 	if velocity.x != 0:
 		if not sound_walk.playing:
 			sound_walk.play()
-		if not is_hitting:
-			anim.play('walk')
+		anim.play('walk')
 	else:
 		sound_walk.stop()
-		if not is_hitting:
-			anim.play('idle')
+		anim.play('idle')
 
-## Placeholder for handling fight state.
-##
-## @return: void
-func on_fight() -> void:
-	pass
 
 ## Applies gravity to the character.
 ## Increments the character's vertical velocity if it is not on the floor.

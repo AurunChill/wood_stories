@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ckeo2a3j2n84u"]
+[gd_scene load_steps=27 format=3 uid="uid://ckeo2a3j2n84u"]
 
 [ext_resource type="PackedScene" uid="uid://c6xaptogrsh26" path="res://prefabs/server/game_manager.tscn" id="1_b00vo"]
 [ext_resource type="Texture2D" uid="uid://cyntvanjbypx2" path="res://assets/environment/springstar_fields/background_0.png" id="2_ohr3q"]
@@ -14,8 +14,9 @@
 [ext_resource type="AudioStream" uid="uid://biq7o3melihfx" path="res://assets/sounds/background/background_ambient.mp3" id="12_ie4ei"]
 [ext_resource type="Script" path="res://scripts/characters/npc/necromancer_extra.gd" id="12_mulbx"]
 [ext_resource type="AudioStream" uid="uid://kdfmv4hk0pqh" path="res://assets/sounds/background/backgournd_amb_8.mp3" id="13_m3b62"]
-[ext_resource type="PackedScene" uid="uid://dqq6r6jthyxtb" path="res://prefabs/characters/skeleton.tscn" id="13_o1nqj"]
 [ext_resource type="PackedScene" uid="uid://ci1nh2ihwk70q" path="res://prefabs/characters/necromancer.tscn" id="14_5o8j0"]
+[ext_resource type="Texture2D" uid="uid://du2viojw8vel7" path="res://assets/characters/skeleton/idle.png" id="16_lgq43"]
+[ext_resource type="Script" path="res://scripts/characters/npc/skeleton.gd" id="17_x1hfw"]
 [ext_resource type="PackedScene" uid="uid://umeur7ihfhcm" path="res://prefabs/characters/knight_woman.tscn" id="18_k51g8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mxjqn"]
@@ -4405,6 +4406,42 @@ physics_layer_0/collision_mask = 7
 sources/0 = SubResource("TileSetAtlasSource_mxjqn")
 sources/1 = SubResource("TileSetAtlasSource_oy6q7")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_40bea"]
+atlas = ExtResource("16_lgq43")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brah0"]
+atlas = ExtResource("16_lgq43")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4hjx"]
+atlas = ExtResource("16_lgq43")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_paodj"]
+atlas = ExtResource("16_lgq43")
+region = Rect2(320, 320, 320, 320)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l2tfp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40bea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brah0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4hjx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_paodj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
 [node name="Node2D" type="Node2D"]
 
 [node name="GameManager" parent="." instance=ExtResource("1_b00vo")]
@@ -4475,10 +4512,6 @@ script = ExtResource("12_mulbx")
 position = Vector2(-243, 108)
 scale = Vector2(0.433886, 0.428558)
 
-[node name="Skeleton" parent="." instance=ExtResource("13_o1nqj")]
-position = Vector2(-331, 118)
-scale = Vector2(0.316642, 0.316642)
-
 [node name="point_necromancer" parent="." instance=ExtResource("11_lcp7s")]
 position = Vector2(-212, 119)
 
@@ -4500,6 +4533,15 @@ volume_db = -15.0
 stream = ExtResource("13_m3b62")
 volume_db = -10.0
 autoplay = true
+
+[node name="skeleton" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-315, 122)
+scale = Vector2(0.0916998, 0.0916998)
+sprite_frames = SubResource("SpriteFrames_l2tfp")
+animation = &"idle"
+frame_progress = 0.814094
+script = ExtResource("17_x1hfw")
 
 [node name="knight_woman" parent="." instance=ExtResource("18_k51g8")]
 position = Vector2(-8.99999, 114)

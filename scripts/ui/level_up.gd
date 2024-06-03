@@ -1,5 +1,5 @@
 extends Control
-class_name LevelUpText
+class_name LevelUpScreen
 ## LevelUpText is a control node that modifies the text of a user level
 
 ## A label node in the scene linked via the editor.

@@ -28,14 +28,6 @@ func _ready():
 	anim.play('idle')
 	looking_at = get_parent().get_node('main')
 
-## Handles the direction that the KnightWoman is looking at
-## by flipping the animation based on the position.
-func handle_look_dir():
-	if looking_at.global_position.x > global_position.x:
-		anim.flip_h = false
-	else:
-		anim.flip_h = true
-
 ## Called every physics frame.
 ## Updates the direction and processes background sounds.
 ##
@@ -46,6 +38,15 @@ func _physics_process(delta):
 		States.Character.READY_TO_DIALOGUE:
 			on_ready_to_dialogue()
 	process_background_sound(delta)
+
+## Handles the direction that the KnightWoman is looking at
+## by flipping the animation based on the position.
+func handle_look_dir():
+	if looking_at.global_position.x > global_position.x:
+		anim.flip_h = false
+	else:
+		anim.flip_h = true
+
 
 ## Processes the background sound by checking the whistle timer
 ## and playing the whistle sound when the timer reaches zero.

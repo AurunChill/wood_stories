@@ -7,21 +7,21 @@ signal invalid_generation
 
 ## Class to hold script data which includes actions and dialogues.
 class ScriptData:
-	var actions
-	var dialogues
+	var actions: Array
+	var dialogues: Array
 	
 	## Initialize the ScriptData with actions and dialogues.
 	##
 	## @param actions: The list of actions.
 	## @param dialogues: The list of dialogues.
-	func _init(actions, dialogues):
+	func _init(actions: Array, dialogues: Array):
 		self.actions = actions
 		self.dialogues = dialogues
 
 ## Class to hold individual action data including method name and role.
 class ActionData:
-	var method_name
-	var role
+	var method_name: String
+	var role: String
 	
 	## Initialize the ActionData with the method name and role.
 	##

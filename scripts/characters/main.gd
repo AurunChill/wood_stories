@@ -9,7 +9,7 @@ var move_action: String
 ## Controls if user is lying or not (wait state)
 var is_lying: bool = false
 ## Controls when to show sleep text ('ZZZZZZ')
-var sleep_text = false
+var sleep_text
 
 ## Called when the node is added to the scene. Initializes the character's state.
 func _ready():
@@ -29,8 +29,6 @@ func _physics_process(delta):
 				on_move_to_point(delta, move_point)
 		States.Character.DISABLED:
 			on_disabled()
-		States.Character.FIGHT:
-			on_fight()
 
 ## Handles the default state of the character, when it is not moving to a specific point or disabled.
 ## @param delta: The time elapsed since the previous frame.

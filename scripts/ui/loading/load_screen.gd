@@ -4,30 +4,30 @@ class_name LoadScreen
 
 ## A label node that displays loading text.
 ## Automatically initialized when the scene is loaded.
-@onready var loading_label = $CanvasLayer/text_wait/text_loading
+@onready var loading_label: Label = $CanvasLayer/text_wait/text_loading
 
 ## A label node that displays random facts.
 ## Automatically initialized when the scene is loaded.
-@onready var loading_fact = $CanvasLayer/text_fact
+@onready var loading_fact: Label = $CanvasLayer/text_fact
 
 ## A sprite node for displaying piggy animation.
 ## Automatically initialized when the scene is loaded.
-@onready var loading_piggy = $CanvasLayer/PiggyLoading
+@onready var loading_piggy: Sprite2D = $CanvasLayer/PiggyLoading
 
 ## Timer for managing loading label dots animation.
-var label_timer = 0.0
+var label_timer: float = 0.0
 
 ## Counter for the number of dots in loading label text.
-var label_dots_count = 1
+var label_dots_count: int = 1
 
 ## Timer for managing how often facts change.
-var fact_timer = 0.0
+var fact_timer: float = 0.0
 
 ## Flag to indicate if the screen is currently shown.
-var is_shown = false
+var is_shown: bool = false
 
 ## Flag to indicate if the piggy animation is currently showing.
-var is_showing_piggy = false
+var is_showing_piggy: bool = false
 
 
 ## Initializes the loading screen, setting it to shown state and sets the initial fact.
@@ -47,7 +47,7 @@ func deinit_screen():
 ## Starts the loading label animation by adding dots in periodic intervals.
 ## @param delta: The time elapsed since the last frame.
 ## @return: void
-func _start_loading_label(delta):
+func _start_loading_label(delta: float):
 	label_timer += delta
 	if label_timer >= 0.5:
 		label_timer = 0
@@ -134,7 +134,7 @@ func _exit_tree():
 ## Called every frame. Updates the loading label, fact, and piggy animations based on timers.
 ## @param delta: The time elapsed since the last frame.
 ## @return: void
-func _process(delta):
+func _process(delta: float):
 	if is_shown:
 		_start_loading_label(delta)
 		

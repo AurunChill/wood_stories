@@ -9,12 +9,12 @@ class_name HUD
 
 ## The text input field in the scene, linked via the editor.
 ## Automatically initialized when the scene is loaded.
-@onready var text_input = $MarginContainer/LineEdit
+@onready var text_input: LineEdit = $MarginContainer/LineEdit
 
 
 ## The menu button in the scene, linked via the editor.
 ## Automatically initialized when the scene is loaded.
-@onready var menu_button = $MenuButton
+@onready var menu_button: MenuButton = $MenuButton
 
 
 # Signal emitted when text input is ended, carrying the submitted prompt.
@@ -25,7 +25,7 @@ signal input_ended(prompt)
 ## Sets both nodes to be invisible.
 ##
 ## @return: void
-func disable() -> void:
+func disable():
 	self.visible = false
 	text_input.visible = false
 	
@@ -34,7 +34,7 @@ func disable() -> void:
 ## Sets both nodes to be visible.
 ##
 ## @return: void
-func enable() -> void:
+func enable():
 	self.visible = true
 	text_input.visible = true
 
@@ -43,7 +43,7 @@ func enable() -> void:
 ## Disables all BaseCharacter nodes in the parent node by setting their state to DISABLED.
 ##
 ## @return: void
-func _on_line_edit_focus_entered() -> void:
+func _on_line_edit_focus_entered():
 	for child in get_parent().get_children():
 		if child is BaseCharacter:
 			child.current_state = States.Character.DISABLED
@@ -53,7 +53,7 @@ func _on_line_edit_focus_entered() -> void:
 ## Resets all BaseCharacter nodes in the parent node by setting their state to DEFAULT.
 ##
 ## @return: void
-func _on_line_edit_focus_exited() -> void:
+func _on_line_edit_focus_exited():
 	for child in get_parent().get_children():
 		if child is BaseCharacter:
 			child.current_state = States.Character.DEFAULT
@@ -64,7 +64,7 @@ func _on_line_edit_focus_exited() -> void:
 ##
 ## @param new_text: The text that was submitted.
 ## @return: void
-func _on_line_edit_text_submitted(new_text: String) -> void:
+func _on_line_edit_text_submitted(new_text: String):
 	text_input.text = ''
 	text_input.release_focus()
 	input_ended.emit(new_text)
@@ -74,5 +74,5 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 ## Releases focus from the text input field.
 ##
 ## @return: void
-func _on_line_edit_mouse_exited() -> void:
+func _on_line_edit_mouse_exited():
 	text_input.release_focus()

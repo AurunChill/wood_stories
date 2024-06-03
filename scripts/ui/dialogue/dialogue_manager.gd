@@ -4,16 +4,7 @@ class_name DialogueManager
 
 ## Stores an array of dictionaries, each representing the data for a single dialogue.
 var dialogue_queue: Array[Dialogue] = []
-var current_dialogue = null
-
-## Represents the possible states of the Dialogue Manager.
-enum State {
-	DISPLAY_DIALOGUES, ## State when dialogues are being displayed.
-	NO_DIALOGUES ## State when there are no dialogues to display.
-}
-
-## Holds the current state of the dialogue manager.
-var current_state: State = State.NO_DIALOGUES
+var current_dialogue: DialogueWindow = null 
 
 ## Defines a signal to indicate that all dialogues in the queue have been finished.
 signal all_dialogues_finished
@@ -38,7 +29,7 @@ func _play_next():
 	current_dialogue = dialogue_window
 	add_child(current_dialogue)
 	current_dialogue.show_dialogue(data)
-	current_dialogue.connect('dialogue_finished', _on_dialogue_finished)
+	current_dialogue.dialogue_finished.connect(_on_dialogue_finished)
 
 ## Checks if the dialogue queue is empty. If so, emits the 'all_dialogues_finished' signal.
 ## @return bool True if the queue is empty, false otherwise.

@@ -4,17 +4,16 @@ class_name Dialogue
 ## It manages which speaker is currently active and contains methods to initialize and convert dialogue to a string.
 
 ## The left-side speaker in the dialogue.
-var speaker_left
-
+var speaker_left: String
 
 ## The right-side speaker in the dialogue.
-var speaker_right
+var speaker_right: String
 
 ## The text of the dialogue.
-var text
+var text: String
 
 ## A boolean indicating if the left-side speaker is active.
-var is_left_active
+var is_left_active: bool
 
 
 ## Initializes a new instance of the Dialogue class.
@@ -24,7 +23,10 @@ var is_left_active
 ## @param speaker_right: The name of the right-side speaker.
 ## @param text: The dialogue text.
 ## @param is_left_active: A boolean indicating whether the left-side speaker is active.
-func _init(speaker_left, speaker_right, text, is_left_active):
+func _init(
+	speaker_left: String, speaker_right: String, 
+	text: String, is_left_active: bool
+	):
 	# Assign parameters to instance variables
 	self.speaker_left = speaker_left
 	self.speaker_right = speaker_right

@@ -10,7 +10,7 @@ signal has_come(point)
 ##
 ## @param body: The `Main` type body to be checked.
 ## @return: `true` if the body is within the collision area, `false` otherwise.
-func is_in(body: Main) -> bool:
+func has(body: Main) -> bool:
 	var collision = null
 	# Iterate over the children nodes to find a CollisionShape2D
 	for child in get_children():

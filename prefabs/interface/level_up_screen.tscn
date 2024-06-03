@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://fvbyxnqjachj"]
 
-[ext_resource type="Texture2D" uid="uid://bjx5ukoferha1" path="res://assets/ui/level_up.png" id="1_g53pl"]
-[ext_resource type="Script" path="res://scripts/ui/level_up.gd" id="1_ksjy0"]
+[ext_resource type="Script" path="res://scripts/ui/level_up.gd" id="1_clvk5"]
+[ext_resource type="Texture2D" uid="uid://bjx5ukoferha1" path="res://assets/ui/level_up.png" id="2_s7s78"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ksjy0")
+script = ExtResource("1_clvk5")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -22,7 +22,7 @@ color = Color(0.329412, 0.341176, 1, 0.27451)
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(562, 271)
 scale = Vector2(0.476013, 0.476013)
-texture = ExtResource("1_g53pl")
+texture = ExtResource("2_s7s78")
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 offset_left = 357.0

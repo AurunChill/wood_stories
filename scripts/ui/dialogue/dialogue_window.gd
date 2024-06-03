@@ -3,31 +3,31 @@ class_name DialogueWindow
 ## Script handles the display of dialogue text with a typing effect, along with speaker icons for left and right sides
 
 ## Defines the rate at which characters in the dialogue text are revealed.
-const CHAR_READ_RATE = 0.05
+const CHAR_READ_RATE: float = 0.05
 ## Defines the waiting time before hiding the dialog, when all the text will be displayed
-const END_WAIT_TIME = 1.0
+const END_WAIT_TIME: float = 1.0
 ## Transparency value for inactive speakers to distinguish between active and inactive speakers.
-const INACTIVE_SPEAKER_TRANSPARENCY = 0.4
+const INACTIVE_SPEAKER_TRANSPARENCY: float = 0.4
 
 ## Holds the container node for the textbox.
-@onready var textbox_container = $TextboxContainer
+@onready var textbox_container: MarginContainer = $TextboxContainer
 
 ## References to the symbols indicating the start of dialogue text.
-@onready var start_symbol = $TextboxContainer/MarginContainer/HBoxContainer/start
+@onready var start_symbol: Label = $TextboxContainer/MarginContainer/HBoxContainer/start
 ## References to the symbols indicating the end of dialogue text.
-@onready var end_symbol = $TextboxContainer/MarginContainer/HBoxContainer/end
+@onready var end_symbol: Label = $TextboxContainer/MarginContainer/HBoxContainer/end
 
 ## Reference to the label node where dialogue text is displayed.
-@onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label
+@onready var label: Label = $TextboxContainer/MarginContainer/HBoxContainer/Label
 
 ## References to the speaker nodes on the left.
-@onready var speaker_left = $speaker_left
+@onready var speaker_left: Sprite2D = $speaker_left
 ## References to the speaker nodes on the right.
-@onready var speaker_right = $speaker_right
+@onready var speaker_right: Sprite2D = $speaker_right
 
 ## References to the audio stream 2d node
-@onready var left_speaker_audio = $left_audio
-@onready var right_speaker_audio = $right_audio
+@onready var left_speaker_audio: AudioStreamPlayer2D = $left_audio
+@onready var right_speaker_audio: AudioStreamPlayer2D = $right_audio
 
 
 ## Enum to determine the side of the speaker in the dialogue.

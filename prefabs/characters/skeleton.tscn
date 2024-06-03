@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://dqq6r6jthyxtb"]
+
+[ext_resource type="Texture2D" uid="uid://du2viojw8vel7" path="res://assets/characters/skeleton/idle.png" id="1_e5plv"]
+[ext_resource type="Script" path="res://scripts/characters/npc/skeleton.gd" id="2_qhfpv"]
+[ext_resource type="AudioStream" uid="uid://bn03brfoax3y8" path="res://assets/sounds/actions/action_walking.mp3" id="3_aycj2"]
+[ext_resource type="AudioStream" uid="uid://gukgsa5kjik7" path="res://assets/sounds/actions/action_hit_3.mp3" id="4_erjn8"]
+[ext_resource type="AudioStream" uid="uid://bys1ql0ei6usq" path="res://assets/sounds/actions/action_whistle.wav" id="5_42uwa"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lq01v"]
+radius = 11.7815
+height = 68.7253
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_skmb4"]
+size = Vector2(122, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40bea"]
+atlas = ExtResource("1_e5plv")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brah0"]
+atlas = ExtResource("1_e5plv")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4hjx"]
+atlas = ExtResource("1_e5plv")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_paodj"]
+atlas = ExtResource("1_e5plv")
+region = Rect2(320, 320, 320, 320)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fi2bt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40bea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brah0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4hjx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_paodj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Skeleton" type="CharacterBody2D"]
+script = ExtResource("2_qhfpv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 11)
+scale = Vector2(1.01855, 1.01855)
+shape = SubResource("CapsuleShape2D_lq01v")
+
+[node name="DialogueArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DialogueArea"]
+texture_filter = 1
+position = Vector2(3, -5)
+shape = SubResource("RectangleShape2D_skmb4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(4, 13)
+scale = Vector2(0.2573, 0.2573)
+sprite_frames = SubResource("SpriteFrames_fi2bt")
+animation = &"idle"
+
+[node name="sound_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_aycj2")
+volume_db = -4.5
+
+[node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_erjn8")
+
+[node name="sound_whistle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_42uwa")
+max_distance = 400.0

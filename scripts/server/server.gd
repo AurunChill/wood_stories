@@ -3,9 +3,9 @@ class_name Server
 ## Sends request to server and returns response
 
 ## Constants for server configuration
-const HOST = 'localhost'
-const PORT = '5051'
-const METHOD = 'send_prompt'
+const HOST: String = 'localhost'
+const PORT: String = '5051'
+const METHOD: String = 'send_prompt'
 
 ## Signal emitted when the request is completed.
 signal request_completed(response)

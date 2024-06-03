@@ -4,14 +4,14 @@ class_name ErrorScreen
 
 ## The amount of time (in seconds) the error screen should be visible.
 ## This value will be decremented each frame.
-var show_time = 5.0
+var show_time: float = 5.0
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 ##
 ## @param delta: The elapsed time since the previous frame (in seconds).
 ## @return: void
-func _process(delta):
+func _process(delta: float):
 	# Decrement the show_time by the elapsed time (delta).
 	show_time -= delta
 	

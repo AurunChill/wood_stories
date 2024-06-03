@@ -10,7 +10,7 @@ var dialogue_interact_text = null
 ## Manager responsible for handling dialogues
 var dialogue_manager = null
 ## Flag to indicate whether the dialogue interact text has been created
-var dialogue_interact_created = false
+var dialogue_interact_created: bool = false
 ## The character currently interacting for dialogue
 var dialogue_character: BaseCharacter = null
 ## Flag to indicate if the NPC is currently in a dialogue

@@ -1,31 +1,31 @@
 extends Node
 class_name GameManager
-## Controls scene "script" flow
+## Controls scene 'script' flow
 
 ## A node representing the server, linked via the editor.
-@onready var server: Node = $Server
+@onready var server: Server = $Server
 ## A node representing the translator, linked via the editor.
-@onready var translator: Node = $Translator
+@onready var translator: Translator = $Translator
 ## Main node linked via the hierarchy.
 @onready var main: Main = get_parent().get_node('main')
 ## HUD node linked via the hierarchy.
-@onready var hud: Node = get_parent().get_node('HUD')
+@onready var hud: HUD = get_parent().get_node('HUD')
 
 ## Various instance variables for state management.
-var loading_screen = null
-var level_up_screen = null
+var loading_screen: LoadScreen = null
+var level_up_screen: LevelUpScreen = null
 var request_amount: int
 
-var data
-var action_indexes = {"data_id": 0, "id": 0, "dialogue_id": 0}
-var move_target = null
-var current_prompt = ''
-var actions_queue = []
+var data: Translator.ScriptData
+var action_indexes: Dictionary = {'data_id': 0, 'id': 0, 'dialogue_id': 0}
+var move_target: PointOfInterest = null
+var current_prompt: String = ''
+var actions_queue: Array = []
 
 ## Called when the node is ready.
 func _ready():
 	# Connect the input ended signal from HUD to the method _on_get_input_text.
-	hud.connect("input_ended", _on_get_input_text)
+	hud.connect('input_ended', _on_get_input_text)
 
 ## Sends a request to the server with the specified prompt.
 ##
@@ -36,11 +36,11 @@ func _send_request(prompt: String):
 	server.send_request(prompt)
 	
 	# Show the loading screen while waiting for the server response.
-	loading_screen = load("res://prefabs/interface/loading/load_screen.tscn").instantiate()
+	loading_screen = load('res://prefabs/interface/loading/load_screen.tscn').instantiate()
 	add_child(loading_screen)
 		
 	move_target = _determine_move_target('start')
-	if not move_target.is_in(main):
+	if not move_target.has(main):
 		main.move_point = move_target
 		main.current_state = States.Character.MOVING_TO_POINT
 		if not move_target.has_come.is_connected(_on_start_point):
@@ -56,7 +56,7 @@ func _send_request(prompt: String):
 ##
 ## @param point: The point where the character moves to.
 ## @return: void
-func _on_start_point(point):
+func _on_start_point(point: PointOfInterest):
 	if main.move_point == point:
 		main.current_state = States.Character.DISABLED
 
@@ -87,7 +87,7 @@ func _on_request_completed(response):
 ##
 ## @return: void
 func _reset_action_indexes():
-	action_indexes = {"data_id": 0, "id": 0, "dialogue_id": 0}
+	action_indexes = {'data_id': 0, 'id': 0, 'dialogue_id': 0}
 	move_target = null
 
 ## Prepares the actions queue by appending each action data.
@@ -104,15 +104,15 @@ func _prepare_actions_queue():
 ##
 ## @return: bool: True if more actions exist, otherwise false.
 func _has_more_actions() -> bool:
-	return action_indexes["data_id"] < data.actions.size()
+	return action_indexes['data_id'] < data.actions.size()
 
 ## Processes the queued actions.
 ##
 ## @return: void
 func _process_actions_queue():
 	if actions_queue.size() == 0:
-		print("All actions processed")
-		show_level_up_screen()
+		print('All actions processed')
+		_show_level_up_screen()
 		return
 	var action_data = actions_queue.pop_front()
 	match action_data.method_name:
@@ -125,13 +125,13 @@ func _process_actions_queue():
 ##
 ## @return: The current action data.
 func _get_current_action():
-	return data.actions[action_indexes["data_id"]][action_indexes["id"]]
+	return data.actions[action_indexes['data_id']][action_indexes['id']]
 
 ## Handles the move action by determining the move target and initiating movement.
 ##
 ## @param action_data: The action data containing movement information.
 ## @return: void
-func _handle_move_action(action_data):
+func _handle_move_action(action_data: Translator.ActionData):
 	move_target = _determine_move_target(action_data.role)
 	if main.move_point != move_target:
 		_initiate_move_to(move_target)
@@ -142,21 +142,21 @@ func _handle_move_action(action_data):
 ##
 ## @param action_data: The action data containing dialogue information.
 ## @return: void
-func _start_dialogue_sequence(action_data):
+func _start_dialogue_sequence(action_data: Translator.ActionData):
 	var dialogue_manager = DialogueManager.new()
 	add_child(dialogue_manager)
-	var current_dialogue_data = data.dialogues[action_indexes["dialogue_id"]]
+	var current_dialogue_data = data.dialogues[action_indexes['dialogue_id']]
 	for dialogue in current_dialogue_data:
 		dialogue_manager.add_to_queue(dialogue)
 	dialogue_manager.start_dialogues()
 	dialogue_manager.all_dialogues_finished.connect(_on_action_finished)
-	action_indexes["dialogue_id"] += 1
+	action_indexes['dialogue_id'] += 1
 
 ## Handles the event when an action is finished.
 ##
 ## @param point: The point where the action was completed.
 ## @return: void
-func _on_action_finished(point):
+func _on_action_finished(point: PointOfInterest):
 	print('action is finished')
 	if point == main.move_point:
 		main.current_state = States.Character.DEFAULT
@@ -173,17 +173,17 @@ func _on_get_input_text(prompt: String):
 ##
 ## @return: void
 func _advance_action_pointer():
-	action_indexes["id"] += 1
-	if action_indexes["id"] >= data.actions[action_indexes["data_id"]].size():
-		action_indexes["id"] = 0
-		action_indexes["data_id"] += 1
+	action_indexes['id'] += 1
+	if action_indexes['id'] >= data.actions[action_indexes['data_id']].size():
+		action_indexes['id'] = 0
+		action_indexes['data_id'] += 1
 
 ## Determines the move target based on the title.
 ##
 ## @param title: The title to determine the move target.
 ## @return: Node: The determined move target node.
-func _determine_move_target(title) -> Node:
-	return get_parent().get_node("point_" + title.to_lower())
+func _determine_move_target(title: String) -> Node:
+	return get_parent().get_node('point_' + title.to_lower())
 
 ## Initiates movement to the specified target.
 ##
@@ -198,8 +198,8 @@ func _initiate_move_to(target: PointOfInterest):
 ## Shows the level up screen and handles the timing for hiding it.
 ##
 ## @return: void
-func show_level_up_screen():
-	level_up_screen = load("res://prefabs/interface/level_up.tscn").instantiate()
+func _show_level_up_screen():
+	level_up_screen = load('res://prefabs/interface/level_up_screen.tscn').instantiate()
 	add_child(level_up_screen)
 	request_amount = Saver.load_total_request_amount() + 1	
 	level_up_screen.set_amount(request_amount)
@@ -216,5 +216,5 @@ func show_level_up_screen():
 ## @return: void
 func _on_hide_level_up_screen():
 	remove_child(level_up_screen)
-	level_up_screen = false
+	level_up_screen = null
 	Saver.save_total_request_amount(request_amount)
