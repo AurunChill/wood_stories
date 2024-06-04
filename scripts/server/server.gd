@@ -3,7 +3,7 @@ class_name Server
 ## Sends request to server and returns response
 
 ## Constants for server configuration
-const HOST: String = 'localhost'
+const HOST: String = '31.128.36.103'
 const PORT: String = '5051'
 const METHOD: String = 'send_prompt'
 

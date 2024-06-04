@@ -62,7 +62,7 @@ func _start_loading_label(delta: float):
 ## @param index: The index of the fact to load from the file.
 ## @return: String: The fact text.
 func _load_fact_from_file(index: int) -> String:
-	var file = FileAccess.open('res://extra/facts.txt', FileAccess.READ)
+	var file = FileAccess.open('res://assets/facts.txt', FileAccess.READ)
 	var line_counter = 0
 	while not file.eof_reached(): 
 		if line_counter == index:
